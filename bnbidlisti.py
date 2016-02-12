@@ -20,7 +20,7 @@ with requests.session() as c:
 	#
 	# file = open('bn.html')
 	# page = file.read()
-	# soup = BeautifulSoup(page)
+	# soup = BeautifulSoup(page, "html.parser")
 
 	# Logging into bn.is
 	login_data = dict(username=USERNAME, password=PASSWORD, action='login')
@@ -28,7 +28,7 @@ with requests.session() as c:
 
 	# Use BeautifulSoup to find the correct part of the page and put it in a list
 	page = c.get(bidlisti_url)
-	soup = BeautifulSoup(page.content)
+	soup = BeautifulSoup(page.content, "html.parser")
 	info_list = soup.find_all('span')
 	list_length = len(info_list)
 
@@ -43,7 +43,7 @@ with requests.session() as c:
 	for i in range(1, list_length-1):
 		current_item = info_list[i].getText()
 		if search_string in current_item:
-			print re.search(location_re, current_item).group(0)
-			print re.search(number_re, current_item).group(0)
+			print(re.search(location_re, current_item).group())
+			print(re.search(number_re, current_item).group())
 		else:
-			print 'Not found'
+			print('Not found')
