@@ -1,6 +1,7 @@
 # coding=utf-8
-# Hlynur Stefánsson - hlynurstef@gmail.com
+# Hlynur Stefánsson - hlynurstef@gmail.com - github.com/hlynurstef/
 
+from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -13,15 +14,6 @@ with requests.session() as c:
 	login_url = 'http://www.bn.is/minar-sidur/innskraning/'
 	bidlisti_url = 'http://www.bn.is/minar-sidur/stada-a-bidlista/'
 
-	# Use the following code only to test offline with a file. Just copy the
-	# source code of http://www.bn.is/minar-sidur/stada-a-bidlista into 
-	# the a file called bn.html and then uncomment lines 21-23. Make sure to 
-	# comment lines 26-31 as well if you want to try testing with a file.
-	#
-	# file = open('bn.html')
-	# page = file.read()
-	# soup = BeautifulSoup(page, "html.parser")
-
 	# Logging into bn.is
 	login_data = dict(username=USERNAME, password=PASSWORD, action='login')
 	c.post(login_url, data=login_data, headers={"Referer": "http://www.bn.is/"})
@@ -32,18 +24,40 @@ with requests.session() as c:
 	info_list = soup.find_all('span')
 	list_length = len(info_list)
 
-	# Regular expressions with unicode characters
+	# Regular expressions with unicode characters to find the name of the 
+	# location and number in the waiting list
 	location_re = re.compile('(Reykjav(\xed)k|Hafnarfj(\xf6)r(\xf0)ur)[a-zA-Z (\xf0)(\xe6)(\xed)(\xfa)(\xde)()]*')
 	number_re = re.compile('[0-9]+')
 
 	# Search by string "Númer" with unicode characters
 	search_string = u'N\xfamer'
 
-	# For loop that runs regex to find the info we want and prints out the results
-	for i in range(1, list_length-1):
-		current_item = info_list[i].getText()
-		if search_string in current_item:
-			print(re.search(location_re, current_item).group())
-			print(re.search(number_re, current_item).group())
-		else:
-			print('Not found')
+	# Open file bn.txt to append, creates the file if it doesn't exist
+	with open('bn.txt', 'a+') as myfile:
+
+		now = datetime.now()
+		date = 'Date: %s/%s/%s' % (now.day, now.month, now.year)
+		time = 'Time: %s:%s:%s' % (now.hour, now.minute, now.second)
+		print date
+		print time
+		myfile.write(date + '\n')
+		myfile.write(time + '\n')
+	
+		# For loop that runs regex to find the info we want and prints out the results to console and to file
+		for i in range(1, list_length-1):
+			current_item = info_list[i].getText()
+			if search_string in current_item:
+
+				# Print to console
+				location = re.search(location_re, current_item).group().encode('utf-8')
+				number = re.search(number_re, current_item).group().encode('utf-8')
+				print location
+				print number
+
+				# Print to file
+				myfile.write(location + '\n')
+				myfile.write(number + '\n')
+			else:
+				print('Not found')
+
+		myfile.write('\n')
