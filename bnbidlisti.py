@@ -58,8 +58,12 @@ with requests.session() as c:
 				myfile.write(location + '\n')
 				myfile.write(number + '\n')
 			else:
-				print 'Not found - make sure you entered username/password correctly'
-				myfile.write('Not found - make sure you entered username/password correctly\n')
+				
+				# Nothing was found, possibly due to incorrect username/password
+				# Print error message
+				not_found = 'Not found - make sure you entered username/password correctly'
+				print not_found
+				myfile.write(not_found + '\n')
 				break
 
 		myfile.write('\n')
