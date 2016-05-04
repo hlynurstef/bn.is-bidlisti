@@ -8,8 +8,9 @@ import re
 
 with requests.session() as c:
 	# Place your username and password for bn.is here
-	USERNAME = 'your_username_here'
-	PASSWORD = 'your_password_here'
+	USERNAME = 'enter_username_here'
+	PASSWORD = 'enter_password_here'
+	
 
 	login_url = 'http://www.bn.is/minar-sidur/innskraning/'
 	bidlisti_url = 'http://www.bn.is/minar-sidur/stada-a-bidlista/'
@@ -58,7 +59,7 @@ with requests.session() as c:
 				myfile.write(location + '\n')
 				myfile.write(number + '\n')
 			else:
-				
+
 				# Nothing was found, possibly due to incorrect username/password
 				# Print error message
 				not_found = 'Not found - make sure you entered username/password correctly'
