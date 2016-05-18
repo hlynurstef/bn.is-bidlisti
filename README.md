@@ -3,15 +3,12 @@ A simple python script that prints your status on the bn.is waiting list both in
 
 To run you need to put your username and password for bn.is into the bnbidlisti.py file and then run it with 'python bnbidlisti.py'
 
-Python version: 3.5.1
+##Python version:
+3.5.1
 
-Imports:
-datetime
-
-requests
-
-bs4
-
-BeautifulSoup
-
-re
+##Imports:
+* datetime
+* requests
+* bs4
+* BeautifulSoup
+* re
