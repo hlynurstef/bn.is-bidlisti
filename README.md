@@ -1,14 +1,11 @@
 # bn.is-bidlisti
-A simple python script that prints your status on the bn.is waiting list both in the console and into a .txt file. You can for example schedule this script to run every day and thus you can easily see how your place in the waiting list changes.
+A simple python script that prints your status on the bn.is waiting list both in the console and appends the results into a .txt file.
 
-To run you need to put your username and password for bn.is into the bnbidlisti.py file and then run it with 'python bnbidlisti.py'
-
-##Python version:
+###Python version:
 3.5.1
 
-##Imports:
+###Imports:
 * datetime
 * requests
-* bs4
 * BeautifulSoup
 * re
